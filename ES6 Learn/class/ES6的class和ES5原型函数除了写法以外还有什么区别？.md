@@ -64,4 +64,45 @@ class Foo {
   }
 }
 ```
+**4.必须使用 new 调用 class**
+
+```
+function Bar() {
+  this.bar = 42;
+}
+const bar = Bar(); // it's ok
+
+class Foo {
+  constructor() {
+    this.foo = 42;
+  }
+}
+const foo = Foo();
+```
+**5.class 的所有方法（包括静态方法和实例方法）都没有原型对象 prototype，所以也没有[[construct]]，不能使用 new 来调用。**
+
+```
+
+function Bar() {
+  this.bar = 42;
+}
+Bar.prototype.print = function() {
+  console.log(this.bar);
+};
+
+const bar = new Bar();
+const barPrint = new bar.print(); // it's ok
+
+class Foo {
+  constructor() {
+    this.foo = 42;
+  }
+  print() {
+    console.log(this.foo);
+  }
+}
+const foo = new Foo();
+const fooPrint = new foo.print(); 
+
+```
 
